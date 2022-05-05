@@ -1,4 +1,6 @@
 # web-robotframework-example
+[![CircleCI](https://circleci.com/gh/lynix28/web-robotframework-example/tree/master.svg?style=shield)](https://circleci.com/gh/lynix28/web-robotframework-example/tree/master)
+
 Web automation testing example project using Robot Framework
 
 - Requirements
@@ -28,6 +30,7 @@ Web automation testing example project using Robot Framework
         - `robot -d ./reports/ -v BROWSER:firefox ./tests/${TESTCASE_NAME}.robot`
     - Run HEADLESS mode
         - `robot -d ./reports/ -v HEADLESS:True -v BROWSER:firefox ./tests/${TESTCASE_NAME}.robot`
+
 - With Docker
     - Build and run a docker container with `Dockerfile`
     - Copy test project to `/app/` directory with docker copy command
