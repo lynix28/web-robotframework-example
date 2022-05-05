@@ -5,6 +5,7 @@ Library          Browser
 
 *** Variables ***
 ${Error_message_box}    //*[@id="login_button_container"]/div/form/div[3]/h3
+${Expected_URL}         https://www.saucedemo.com/inventory.html
 
 *** Keywords ***
 input username and password
@@ -25,7 +26,7 @@ click login button
 
 login validation
     ${URL}=  Get Url
-    IF  "${URL}" != "https://www.saucedemo.com/inventory.html"
+    IF  "${URL}" != "${Expected_URL}"
         ${Error_text}=  Get Text  ${Error_message_box}
         IF  "${Error_text}" != ""
             Take Screenshot
