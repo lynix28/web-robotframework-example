@@ -28,6 +28,7 @@ Web automation testing example project using Robot Framework
         - `robot -d ./reports/ -v BROWSER:firefox ./tests/${TESTCASE_NAME}.robot`
     - Run HEADLESS mode
         - `robot -d ./reports/ -v HEADLESS:True -v BROWSER:firefox ./tests/${TESTCASE_NAME}.robot`
+        
 - With Docker
     - Build and run a docker container with `Dockerfile`
     - Copy test project to `/app/` directory with docker copy command
