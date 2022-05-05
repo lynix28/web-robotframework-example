@@ -11,8 +11,8 @@ jobs:
       - run:
           name: "Preparing Testing"
           command: |
-            cp ./resources/ /app/
-            cp ./tests/ /app/
+            cp -r ./resources/ /app/
+            cp -r ./tests/ /app/
       - run:
           name: "Run Test"
           command: robot -d /app/reports/ -v HEADLESS:True /app/tests/.
