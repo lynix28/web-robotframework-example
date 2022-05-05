@@ -6,12 +6,16 @@ jobs:
         auth:
           username: $USERNAME
           password: $PASSWORD
-    working_directory: /app/
     steps:
       - checkout
       - run:
+          name: "Preparing Testing"
+          command: |
+            cp ./resources/ /app/
+            cp ./tests/ /app/
+      - run:
           name: "Run Test"
-          command: "robot -d ./reports/ -v HEADLESS:True ./tests/."
+          command: robot -d /app/reports/ -v HEADLESS:True /app/tests/.
       - store_artifacts:
           path: /app/reports/
 
