@@ -18,10 +18,16 @@ Web automation testing example project using Robot Framework
 
 - Run File Test (Example)
     - Create `reports` directory
-    - `robot -d ./reports/ ./tests/${TESTCASE_NAME}.robot`                     | Run with default web browser setting (Chromium Based)
-    - `robot -d ./reports/ -v BROWSER:firefox ./tests/${TESTCASE_NAME}.robot`  | Run with other web browser (use 'firefox' or 'webkit' (Apple browser))
-    - `robot -d ./reports/ -v HEADLESS:True -v BROWSER:firefox ./tests/${TESTCASE_NAME}.robot` | Run in different browser and HEADLESS mode
-
+    - Run all test
+        - `robot -d ./reports/ ./tests/.`
+    - Run test by Tag
+        - `robot -d ./reports/ -i "Sanity Test" ./tests/.`
+    - Run specific Testcase
+        - `robot -d ./reports/ ./tests/${TESTCASE_NAME}.robot`
+    - Run with specific web browser (available browser: Chromium, Firefox, Webkit)(Default browser is Chromium)
+        - `robot -d ./reports/ -v BROWSER:firefox ./tests/${TESTCASE_NAME}.robot`
+    - Run HEADLESS mode
+        - `robot -d ./reports/ -v HEADLESS:True -v BROWSER:firefox ./tests/${TESTCASE_NAME}.robot`
 - With Docker
     - Build and run a docker container with `Dockerfile`
     - Copy test project to `/app/` directory with docker copy command
