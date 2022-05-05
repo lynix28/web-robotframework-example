@@ -1,0 +1,25 @@
+version: 2.1
+jobs:
+  Build-and-Test:
+    docker:
+      - image: pridecontrol/robotframework-web:v1
+        auth:
+          username: $USERNAME
+          password: $PASSWORD
+    steps:
+      - checkout
+      - run:
+          name: "Prepare Test"
+          command: |
+            cp -r ./resources/ /app/
+            cp -r ./tests/ /app/
+      - run:
+          name: "Run Test"
+          command: robot -d /app/reports/ -v HEADLESS:True /app/tests/.
+      - store_artifacts:
+          path: /app/reports/
+
+workflows:
+  Web-Automation-Test-Workflow:
+    jobs:
+      - Build-and-Test
