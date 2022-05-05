@@ -17,7 +17,7 @@ login page should be open
     ${Title}=  Get Title
     Get Title  ==  Swag Labs  message="Title is different | ${Title}"
     ${Login_logo}=  Get Element  xpath=//*[@id="root"]/div/div[1]
-    Get Style  ${Login_logo}  text-align  ==  center
+    Get Style  ${Login_logo}  text-align  ==  cente
     ${Login_username_field}=  Get Element  xpath=//*[@id="user-name"]
     Get Property  ${Login_username_field}  type  ==  text
     ${Login_password_field}=  Get Element  xpath=//*[@id="password"]
