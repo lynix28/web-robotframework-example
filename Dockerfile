@@ -30,6 +30,4 @@ RUN cd /app/ && \
 
 RUN mkdir /app/reports/
 
-ENV NODE_PATH=/usr/lib/node_modules
-
 ENV PATH=/app:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
