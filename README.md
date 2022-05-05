@@ -7,10 +7,10 @@ Web automation testing example project using Robot Framework
 
 - Setup Virtual ENV
     - Install venv
-        `pip install virtualenv`
-        `virtualenv ${PROJECT_FOLDER}/venv`
+        - `pip install virtualenv`
+        - `virtualenv ${PROJECT_FOLDER}/venv`
     - Activate venv
-        `source ${PROJECT_FOLDER}/venv/bin/activate`
+        - `source ${PROJECT_FOLDER}/venv/bin/activate`
 
 - Install Dependencies
     - `pip install -r requirement.txt`
