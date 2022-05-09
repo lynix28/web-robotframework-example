@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Preparing Testing"
+          name: "Prepare Test"
           command: |
             cp -r ./resources/ /app/
             cp -r ./tests/ /app/
