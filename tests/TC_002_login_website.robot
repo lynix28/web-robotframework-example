@@ -13,6 +13,7 @@ Success login to website
     [Documentation]  Test case to ensure user able login to website with valid credential
     input username and password    ${Username}    ${Password}
     click login button
+    login validation
 
 Success logout from website
     [Documentation]  Test case to ensure user able to logout from website

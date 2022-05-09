@@ -4,9 +4,14 @@ Library          BuiltIn
 Library          Browser
 
 *** Variables ***
-${URL}        https://www.saucedemo.com/
-${BROWSER}    chromium
-${HEADLESS}   False
+${URL}                     https://www.saucedemo.com/
+${BROWSER}                 chromium
+${HEADLESS}                False
+
+${Login_logo}              xpath=//*[@id="root"]/div/div[1]
+${Login_username_field}    xpath=//*[@id="user-name"]
+${Login_password_field}    xpath=//*[@id="password"]
+${Login_button}            xpath=//*[@id="login-button"]
 
 *** Keywords ***
 open website
@@ -16,12 +21,12 @@ open website
 login page should be open
     ${Title}=  Get Title
     Get Title  ==  Swag Labs  message="Title is different | ${Title}"
-    ${Login_logo}=  Get Element  xpath=//*[@id="root"]/div/div[1]
+    Wait For Elements State  ${Login_logo}  visible  timeout=10s
     Get Style  ${Login_logo}  text-align  ==  center
-    ${Login_username_field}=  Get Element  xpath=//*[@id="user-name"]
+    Wait For Elements State  ${Login_username_field}  visible  timeout=10s
     Get Property  ${Login_username_field}  type  ==  text
-    ${Login_password_field}=  Get Element  xpath=//*[@id="password"]
+    Wait For Elements State  ${Login_password_field}  visible  timeout=10s
     Get Property  ${Login_password_field}  type  ==  password
-    ${Login_button}=  Get Element  xpath=//*[@id="login-button"]
+    Wait For Elements State  ${Login_button}  visible  timeout=10s
     Get Property  ${Login_button}  type  ==  submit
     Sleep  5
