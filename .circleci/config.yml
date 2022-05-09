@@ -13,11 +13,23 @@ jobs:
           command: |
             cp -r ./resources/ /app/
             cp -r ./tests/ /app/
+            mkdir /app/reports/chromium
+            mkdir /app/reports/firefox
+            mkdir /app/reports/webkit
       - run:
-          name: "Run Test"
-          command: robot -d /app/reports/ -v HEADLESS:True /app/tests/.
+          name: "Run Test - Chromium"
+          command: robot -d /app/reports/chromium/ -v HEADLESS:True /app/tests/.
+      - run:
+          name: "Run Test - Firefox"
+          command: robot -d /app/reports/firefox/ -v HEADLESS:True -v BROWSER:firefox /app/tests/.
+      - run:
+          name: "Run Test - Webkit"
+          command: robot -d /app/reports/webkit/ -v HEADLESS:True -v BROWSER:webkit /app/tests/.
+      - run:
+          name: "Wrapping Test Results"
+          command: tar -cvf artifact.tar /app/reports/
       - store_artifacts:
-          path: /app/reports/
+          path: artifact.tar
 
 workflows:
   Web-Automation-Test-Workflow:

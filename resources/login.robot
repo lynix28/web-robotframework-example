@@ -4,25 +4,28 @@ Library          BuiltIn
 Library          Browser
 
 *** Variables ***
-${Error_message_box}    //*[@id="login_button_container"]/div/form/div[3]/h3
-${Expected_URL}         https://www.saucedemo.com/inventory.html
+${Login_username_field}  xpath=//*[@id="user-name"]
+${Login_password_field}  xpath=//*[@id="password"]
+${Login_button}          xpath=//*[@id="login-button"]
+${Error_message_box}     xpath=//*[@id="login_button_container"]/div/form/div[3]/h3
+${Expected_URL}          https://www.saucedemo.com/inventory.html
+${Expected_error_text}   Epic sadface: Username and password do not match any user in this service
 
 *** Keywords ***
 input username and password
     [Arguments]  ${Username}  ${Password}
-    ${Login_username_field}=  Get Element  xpath=//*[@id="user-name"]
+    Wait For Elements State  ${Login_username_field}  visible  timeout=10s
     Click  ${Login_username_field}
     Type Text  ${Login_username_field}  ${Username}
-    ${Login_password_field}=  Get Element  xpath=//*[@id="password"]
+    Wait For Elements State  ${Login_password_field}  visible  timeout=10s  
     Click  ${Login_password_field}
     Type Secret  ${Login_password_field}  $Password
     Sleep  5
 
 click login button
-    ${Login_button}=  Get Element  xpath=//*[@id="login-button"]
+    Wait For Elements State  ${Login_button}  visible  timeout=10s  
     Click  ${Login_button}
     Sleep  5
-    login validation
 
 login validation
     ${URL}=  Get Url
@@ -34,3 +37,8 @@ login validation
         END
     END
     Sleep  5
+
+# Negative Case
+login validation expect error
+    Get Text  ${Error_message_box}  ==  ${Expected_error_text}
+                
