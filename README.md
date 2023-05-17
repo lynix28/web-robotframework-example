@@ -23,7 +23,7 @@ Web automation testing example project using Robot Framework
     - Run all test
         - `robot -d ./reports/ ./tests/.`
     - Run test by Tag
-        - `robot -d ./reports/ -i "Sanity Test" ./tests/.`
+        - `robot -d ./reports/ -i "SanityTest" ./tests/.`
     - Run specific Testcase
         - `robot -d ./reports/ ./tests/${TESTCASE_NAME}.robot`
     - Run with specific web browser (available browser: Chromium, Firefox, Webkit)(Default browser is Chromium)
