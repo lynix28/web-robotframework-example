@@ -24,15 +24,17 @@ jobs:
       - run:
           name: "Prepare Test"
           command: |
-            mv -r ./resources/ /app/
-            mv -r ./tests/ /app/
-            mv ./discord-notification.js
+            mv ./resources/ /app/
+            mv ./tests/ /app/
+            mv ./discord-notification.js /app/
             mkdir /app/reports/chromium
             mkdir /app/reports/firefox
             mkdir /app/reports/webkit
       - run:
           name: "Send Notification - Start Testing"
-          command: npx run-func discord-notification.js test "start"
+          command: |
+            cd /app/
+            npx run-func discord-notification.js test "start"
           when: always
       - run:
           name: "Run Test - Chromium"
@@ -45,7 +47,9 @@ jobs:
           command: robot -d /app/reports/webkit/ -v HEADLESS:True -v BROWSER:webkit /app/tests/.
       - run:
           name: "Send Notification - Stop Testing"
-          command: npx run-func discord-notification.js test "stop"
+          command: |
+            cd /app/
+            npx run-func discord-notification.js test "stop"
           when: always
       - run:
           name: "Wrapping Test Results"
