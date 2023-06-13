@@ -9,13 +9,37 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Install Dependencies"
+          command: |
+            cd /app/
+            curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh
+            chmod +x nodesource_setup.sh
+            sudo bash nodesource_setup.sh
+            sudo apt update
+            sudo apt install -y nodejs
+            npm install dotenv run-func @penseapp/discord-notification
+      - run:
+          name: "Setup Environment Variable"
+          command: |
+            cd /app/
+            echo "BUILD=$CIRCLE_BUILD_NUM" >> .env
+            echo "REPOSITORY_URL=$CIRCLE_REPOSITORY_URL" >> .env
+            echo "BUILD_URL=$CIRCLE_BUILD_URL" >> .env
+            echo "BRANCH=$CIRCLE_BRANCH" >> .env
+            echo "DISCORD_WEBHOOK=$DISCORD_WEBHOOK" >> .env
+      - run:
           name: "Prepare Test"
           command: |
-            cp -r ./resources/ /app/
-            cp -r ./tests/ /app/
+            mv -r ./resources/ /app/
+            mv -r ./tests/ /app/
+            mv ./discord-notification.js
             mkdir /app/reports/chromium
             mkdir /app/reports/firefox
             mkdir /app/reports/webkit
+      - run:
+          name: "Send Notification - Start Testing"
+          command: npx run-func discord-notification.js test "start"
+          when: always
       - run:
           name: "Run Test - Chromium"
           command: robot -d /app/reports/chromium/ -v HEADLESS:True /app/tests/.
@@ -26,8 +50,13 @@ jobs:
           name: "Run Test - Webkit"
           command: robot -d /app/reports/webkit/ -v HEADLESS:True -v BROWSER:webkit /app/tests/.
       - run:
+          name: "Send Notification - Stop Testing"
+          command: npx run-func discord-notification.js test "stop"
+          when: always
+      - run:
           name: "Wrapping Test Results"
           command: tar -cvf artifact.tar /app/reports/
+          when: always
       - store_artifacts:
           path: artifact.tar
 
