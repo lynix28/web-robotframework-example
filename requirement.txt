@@ -2,3 +2,4 @@
 robotframework >= 5.0
 robotframework-browser >= 12.3.0
 robotframework-screencaplibrary >= 1.6.0
+robotframework-pabot

@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   Build-and-Test:
     docker:
-      - image: pridecontrol/robotframework-web:v1
+      - image: pridecontrol/robotframework-web:1.1.0
         auth:
           username: $USERNAME
           password: $PASSWORD
@@ -39,13 +39,13 @@ jobs:
           when: always
       - run:
           name: "Run Test - Chromium"
-          command: robot -d /app/reports/chromium/ -v HEADLESS:True /app/tests/.
+          command: pabot --processes 2 -d /app/reports/chromium/ -v HEADLESS:True /app/tests/.
       - run:
           name: "Run Test - Firefox"
-          command: robot -d /app/reports/firefox/ -v HEADLESS:True -v BROWSER:firefox /app/tests/.
+          command: pabot --processes 2 -d /app/reports/firefox/ -v HEADLESS:True -v BROWSER:firefox /app/tests/.
       - run:
           name: "Run Test - Webkit"
-          command: robot -d /app/reports/webkit/ -v HEADLESS:True -v BROWSER:webkit /app/tests/.
+          command: pabot --processes 2 -d /app/reports/webkit/ -v HEADLESS:True -v BROWSER:webkit /app/tests/.
       - run:
           name: "Send Notification - Stop Testing"
           command: |
