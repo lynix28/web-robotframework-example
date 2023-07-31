@@ -26,7 +26,7 @@ Open Website
     New Browser    browser=${BROWSER}    headless=${HEADLESS}    slowMo=0.10
     #Start Video Recording   None    ${TSID}\_recording
     Sleep    2
-    New Page    ${URL}
+    New Page
 
 Close Website
     [Documentation]    Custom Keyword to close/stop everything

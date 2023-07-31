@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation    Resource file for 'Login' scenario
 Resource    ../shared/base.resource
+Resource    ../shared/user_data.resource
 
 
 *** Variables ***
@@ -14,8 +15,9 @@ ${EXPECTED_ERROR_TEXT}   Epic sadface: Username and password do not match any us
 
 
 *** Keywords ***
-Login Page Should Be Open
+Sauce Demo Login Page
     [Documentation]  A keyword to validate the Login Page elements are exist and It's loaded well.
+    Go To    ${URL}
     ${Title}=  Get Title
     Get Title  ==  Swag Labs  message="Title is different | ${Title}"
     Wait For Elements State  ${LOGIN_LOGO}  visible  timeout=10s
@@ -26,26 +28,47 @@ Login Page Should Be Open
     Get Property  ${LOGIN_PASSWORD_FIELD}  type  ==  password
     Wait For Elements State  ${LOGIN_BUTTON}  visible  timeout=10s
     Get Property  ${LOGIN_BUTTON}  type  ==  submit
-    Sleep  5
+    Sleep  2
 
-Input Username And Password
-    [Documentation]  A keyword to instruct the Robot to fill Username and Password field.
-    [Arguments]  ${Username}  ${Password}
+I Enter A Valid Username
+    [Documentation]  A keyword to instruct the Robot to fill Username field.
+    [Arguments]  ${Username}
     Wait For Elements State  ${LOGIN_USERNAME_FIELD}  visible  timeout=10s
     Click  ${LOGIN_USERNAME_FIELD}
     Type Text  ${LOGIN_USERNAME_FIELD}  ${Username}
+    Sleep  2
+
+I Enter An Invalid Username
+    [Documentation]  A keyword to instruct the Robot to fill Username field.
+    [Arguments]  ${Username}
+    Wait For Elements State  ${LOGIN_USERNAME_FIELD}  visible  timeout=10s
+    Click  ${LOGIN_USERNAME_FIELD}
+    Type Text  ${LOGIN_USERNAME_FIELD}  ${Username}
+    Sleep  2
+
+I Enter A Valid Password
+    [Documentation]  A keyword to instruct the Robot to fill Password field.
+    [Arguments]  ${Password}
     Wait For Elements State  ${LOGIN_PASSWORD_FIELD}  visible  timeout=10s
     Click  ${LOGIN_PASSWORD_FIELD}
     Type Secret  ${LOGIN_PASSWORD_FIELD}  $Password
-    Sleep  5
+    Sleep  2
+
+I Enter An Invalid Password
+    [Documentation]  A keyword to instruct the Robot to fill Password field.
+    [Arguments]  ${Password}
+    Wait For Elements State  ${LOGIN_PASSWORD_FIELD}  visible  timeout=10s
+    Click  ${LOGIN_PASSWORD_FIELD}
+    Type Secret  ${LOGIN_PASSWORD_FIELD}  $Password
+    Sleep  2
 
 Click Login Button
     [Documentation]  A keyword to instruct the Robot to click Login Button.
     Wait For Elements State  ${LOGIN_BUTTON}  visible  timeout=10s
     Click  ${LOGIN_BUTTON}
-    Sleep  5
+    Sleep  2
 
-Login Validation
+I Can Access My Account
     [Documentation]  A keyword to instruct the Robot to validate the Login Process.
     ${URL}=  Get Url
     IF  "${URL}" != "${EXPECTED_URL}"
@@ -55,9 +78,15 @@ Login Validation
             Fail
         END
     END
-    Sleep  5
+    Sleep  2
 
-# Negative Case
-Login Validation Expect Error
+I Will See An Error Message
     [Documentation]  A keyword to instruct the Robot to make sure the Login process is return an error.
     Get Text  ${ERROR_MESSAGE_BOX}  ==  ${EXPECTED_ERROR_TEXT}
+
+Sauce Demo Dashboard Page
+    [Documentation]  A keyword to automatically logged in to Sauce Demo website.
+    Go To    ${URL}
+    I Enter A Valid Username    ${USERNAME}
+    I Enter A Valid Password    ${PASSWORD}
+    Click Login Button
